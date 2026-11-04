@@ -1,0 +1,49 @@
+{
+  "meeting": {
+    "title": "Sponsor Meeting Minutes",
+    "weekday": "Thursday",
+    "start": "14:00",
+    "time_label": "2 PM",
+    "location": "Zoom and in person, Adele Learning Halls, Room 130",
+    "next_meeting_line": "The next Sponsor Meeting will be on Thursday, {date}, from 2PM to ~3PM (room 130 Adele Learning Commons)",
+    "misheard_names": "Kongil or Kong Il = Kang-il Park; Rashiq or Varshik = Vrisheek; Cake or Kate = Keyik; Barzahn = Barzan; Rachel = Rachael Whitehair"
+  },
+  "attendees": [
+    {"label": "Team", "names": ["Barzan Mustafa", "Clayton Howe", "Keyik Annagulyyeva", "Oliver Luebcke", "Trang Tran", "Vrisheek Venkatesh Goud Panjala"]},
+    {"label": "UNL Faculty and Staff", "names": ["Melanie Kugler-Wright", "Kang-il Park", "Ben Ferguson"]},
+    {"label": "Sponsors", "names": ["Alexa Davis", "Rachael Whitehair", "Nick Arneson", "Eric Dinger", "Sarah Starostka"]}
+  ],
+  "next_meeting_agenda": [
+    "Accomplishments from our last meeting",
+    "Sprint goal status",
+    "Project Roadmap",
+    "Issues",
+    "Risks",
+    "Demo",
+    "Questions",
+    "Goals for next week",
+    "Next Steps"
+  ],
+  "recording": {
+    "auto_start": false,
+    "zoom_auto_start": "schedule",
+    "zoom_window_minutes": 60,
+    "stop_on_silence": false,
+    "silence_minutes": 5,
+    "min_minutes": 15,
+    "silence_threshold_db": -45,
+    "max_hours": 4,
+    "chunk_seconds": 120
+  },
+  "gemini": {
+    "api_key": "",
+    "model": "gemini-flash-latest",
+    "backup_model": "gemini-flash-lite-latest"
+  },
+  "output": {
+    "folder": "~/Downloads",
+    "filename": "Meeting Minutes_{MM}_{DD}",
+    "save_transcript": true,
+    "delete_audio_after_success": true
+  }
+}

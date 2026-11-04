@@ -1,0 +1,122 @@
+# Meeting Minutes settings. Edit this file, not the code.
+# Relative paths are relative to this repo. "~" means your home folder.
+
+[meeting]
+title = "Sponsor Meeting Minutes"
+# Day and time of the weekly meeting. The schedule trigger fires
+# `pre_roll_minutes` before the start time.
+weekday = "Thursday"
+start = "14:00"
+pre_roll_minutes = 2
+# How the time is written on the second line of the minutes.
+time_label = "2 PM"
+location = "Zoom and in person, Adele Learning Halls, Room 130"
+# Added as the last "Next Steps" bullet. {date} is the next meeting date,
+# for example "October 29th".
+next_meeting_line = "The next Sponsor Meeting will be on Thursday, {date}, from 2PM to ~3PM (room 130 Adele Learning Commons)"
+# Words whisper should spell right (names, products, places).
+# How speech recognition tends to mishear names, so Claude can fix them.
+misheard_names = "Kongil or Kong Il = Kang-il Park; Rashiq or Varshik = Vrisheek; Cake or Kate = Keyik; Barzahn = Barzan; Rachel = Rachael Whitehair"
+vocabulary = "NSAC, Nebraska Strategic Ag Coalition, ArcGIS, Cloudflare, Convex, GoDaddy, UNL, sprint, Adele Learning Commons"
+
+# Attendee groups, in the order they appear in the minutes.
+# This list is the default. The model only suggests changes (see the run log).
+[[attendees]]
+label = "Team"
+names = ["Barzan Mustafa", "Clayton Howe", "Keyik Annagulyyeva", "Oliver Luebcke", "Trang Tran", "Vrisheek Venkatesh Goud Panjala"]
+
+[[attendees]]
+label = "UNL Faculty and Staff"
+names = ["Melanie Kugler-Wright", "Kang-il Park", "Ben Ferguson"]
+
+[[attendees]]
+label = "Sponsors"
+names = ["Alexa Davis", "Rachael Whitehair", "Nick Arneson", "Eric Dinger", "Sarah Starostka"]
+
+[next_meeting_agenda]
+items = [
+  "Accomplishments from our last meeting",
+  "Sprint goal status",
+  "Project Roadmap",
+  "Issues",
+  "Risks",
+  "Demo",
+  "Questions",
+  "Goals for next week",
+  "Next Steps",
+]
+
+[recording]
+# false: recording only starts when you click Start Recording in the menu
+# bar (no Thursday schedule, no Zoom detection).
+# true: also start on the schedule and when Zoom starts (see zoom_auto_start).
+# After changing this, run `.venv/bin/python -m minutes install-launchd`.
+auto_start = false
+# false: recording only stops when you click Stop Recording (or at max_hours).
+# true: also stop after silence_minutes of quiet once Zoom has closed.
+stop_on_silence = false
+sessions_dir = "~/MeetingMinutes/sessions"
+# Stop after this many minutes with no sound on either track
+# (only counts once Zoom has closed).
+silence_minutes = 5
+# Never stop for silence in the first N minutes (people arrive late).
+min_minutes = 15
+# Safety cap in case someone forgets to click Stop Recording.
+max_hours = 4.0
+# Sound louder than this counts as "not silent". Raise it (for example -40)
+# if the room is noisy and recordings never stop.
+silence_threshold_db = -45
+# Length of each audio file on disk. A crash loses at most one chunk.
+chunk_seconds = 120
+# "schedule": start on Zoom only within `zoom_window_minutes` of the
+# scheduled meeting. "always": start on every Zoom meeting. "off": never.
+zoom_auto_start = "schedule"
+zoom_window_minutes = 60
+
+[transcription]
+whisper_bin = "whisper-cli"
+model = "models/ggml-large-v3-turbo.bin"
+# Optional voice activity model. Cuts made-up text during silence.
+vad_model = "models/ggml-silero-v5.1.2.bin"
+language = "en"
+threads = 8
+
+[llm]
+# Who writes the minutes:
+# "claude": Claude through Claude Code (`claude -p`), using the Claude plan
+#   you are signed in with. Best quality. The transcript is sent to Anthropic.
+#   If Claude cannot be reached, the local model below is used instead.
+# "local": the local model below. Free and private, weaker drafts.
+writer = "claude"
+# "opus" (best), "sonnet" (faster, uses less of your plan) or a full model name.
+claude_model = "opus"
+claude_timeout_seconds = 900
+# Local model settings (used when writer = "local", or as the backup).
+host = "http://127.0.0.1:11434"
+model = "qwen3:8b"
+num_ctx = 32768
+temperature = 0.2
+# Longest answer allowed for one section. Stops a model that is stuck
+# repeating itself. Normal sections use 100 to 600.
+max_answer_tokens = 2048
+# Give up on one section after this long; the rest of the minutes are
+# still saved and that section says to fill it in by hand.
+section_timeout_seconds = 600
+# Final pass that removes duplicate bullets. "simple" is instant.
+# "llm" also asks the model to tidy the wording (adds a few minutes).
+merge_pass = "simple"
+
+[output]
+# Where the finished .docx and transcript .txt are saved.
+folder = "~/Downloads"
+filename = "Meeting Minutes_{MM}_{DD}"
+# Save the minutes as a PDF (made with Pages, or LibreOffice if installed).
+pdf = true
+# Also save the .docx to the output folder. It is always kept in the
+# session folder either way, and saved here if the PDF could not be made.
+save_docx = false
+# Save the transcript .txt next to the PDF, so people can check the minutes.
+save_transcript = true
+template = "templates/minutes_template.docx"
+# Delete the raw audio after the .docx is saved.
+delete_audio_after_success = true
